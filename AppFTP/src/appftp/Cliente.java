@@ -17,10 +17,12 @@ public class Cliente {
     public static void main(String[] args) {
         System.out.println("Bienvenido al servicio de transferencia FTP");
         boolean salir = false;
+        boolean conectado = false;
         GestorFTP gestor = new GestorFTP();
         String respuesta;
         Scanner sc = new Scanner(System.in);
         do { 
+            //connect 10.0.2.15 marco/marco
             mostrarAyuda();
             respuesta = sc.nextLine();
             String [] partes = respuesta.split(" ");
@@ -29,9 +31,25 @@ public class Cliente {
                     
                     String servidor = partes[1];
                     String usuario = partes[2].substring(0, partes[2].indexOf("/"));
-                    String password = partes[2].substring(partes[2].indexOf("/"), partes[2].length());
-                    gestor.conectar(servidor, 21, usuario, password);
-                }else if (respuesta.contains(respuesta)) {
+                    String password = partes[2].substring(partes[2].indexOf("/")+1, partes[2].length());
+
+                    if (!conectado) {
+                        if (gestor.conectar(servidor, 21, usuario, password)) {
+                            System.out.println("Conexión establecida correctamente con " + servidor);
+                            conectado = true;
+                        }else{
+                            System.out.println("Error en los datos de conexión!!");
+                        }
+                    }else{
+                        System.out.println("Ya esta conectado a otro servidor, desconecte primero");
+                    }
+                }else if (respuesta.equals("List")) {
+                    if (conectado) {
+                        gestor.listarFicheros();
+                    }else{
+                        System.out.println("Necesitas conexión primero con un servidor!");
+                    }
+                    
                     
                 }else if (respuesta.contains(respuesta)) {
                     

@@ -12,8 +12,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.SocketException;
+import java.util.Arrays;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
 
 /**
@@ -72,10 +74,13 @@ public class GestorFTP {
         os.close();
         return recibido;
     }
+    public void listarFicheros() throws IOException{
+        String nombreDirectorio = this.clienteFTP.printWorkingDirectory();
+        System.out.println(nombreDirectorio);
+        FTPFile[] ficheros = this.clienteFTP.listFiles();
+        Arrays.asList(ficheros).forEach(x -> System.out.println(x));
+        
+    }
     
-    
-    
-    
-    
-    
+
 }
