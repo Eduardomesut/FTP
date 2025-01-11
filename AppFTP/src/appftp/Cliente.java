@@ -5,6 +5,7 @@
 package appftp;
 
 import java.io.IOException;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,10 +18,31 @@ public class Cliente {
         System.out.println("Bienvenido al servicio de transferencia FTP");
         boolean salir = false;
         GestorFTP gestor = new GestorFTP();
+        String respuesta;
+        Scanner sc = new Scanner(System.in);
         do { 
             mostrarAyuda();
+            respuesta = sc.nextLine();
+            String [] partes = respuesta.split(" ");
             try {
-                System.out.println(gestor.conectar("10.0.2.15", 21, "marco", "marco"));
+                if (respuesta.contains("connect") && partes.length == 3 && respuesta.contains("/")) {
+                    
+                    String servidor = partes[1];
+                    String usuario = partes[2].substring(0, partes[2].indexOf("/"));
+                    String password = partes[2].substring(partes[2].indexOf("/"), partes[2].length());
+                    gestor.conectar(servidor, 21, usuario, password);
+                }else if (respuesta.contains(respuesta)) {
+                    
+                }else if (respuesta.contains(respuesta)) {
+                    
+                }else if (respuesta.contains(respuesta)) {
+                    
+                }else if (respuesta.contains(respuesta)) {
+                    
+                }else{
+                    
+                }
+               
             } catch (IOException ex) {
                 Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -28,7 +50,7 @@ public class Cliente {
             
             
             
-        } while (salir);
+        } while (!salir);
         
         
     }
