@@ -60,16 +60,16 @@ public class GestorFTP {
         clienteFTP.disconnect();
     }
     
-    public boolean subirFichero(String path) throws IOException {
-        File ficheroLocal = new File(path);
-        InputStream is = new FileInputStream(ficheroLocal);
-        boolean enviado = clienteFTP.storeFile(ficheroLocal.getName(), is);
+    public boolean subirFichero(String ficheroLocal) throws IOException {
+        File fichero = new File(ficheroLocal);
+        InputStream is = new FileInputStream(fichero);
+        boolean enviado = clienteFTP.storeFile("/home/marco/" + fichero.getName(), is);
         is.close();
         return enviado;
     }
 
     public boolean descargarFichero(String ficheroRemoto, String pathLocal) throws IOException {
-        OutputStream os = new BufferedOutputStream(new FileOutputStream(pathLocal));
+        OutputStream os = new BufferedOutputStream(new FileOutputStream(ficheroRemoto));
         boolean recibido = clienteFTP.retrieveFile(ficheroRemoto, os);
         os.close();
         return recibido;
@@ -80,6 +80,10 @@ public class GestorFTP {
         FTPFile[] ficheros = this.clienteFTP.listFiles();
         Arrays.asList(ficheros).forEach(x -> System.out.println(x));
         
+    }
+    public boolean cambiarDirectorio(String path) throws IOException{
+        
+        return this.clienteFTP.changeWorkingDirectory(path);           
     }
     
 
