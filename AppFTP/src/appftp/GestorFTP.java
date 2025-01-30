@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.Arrays;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
@@ -33,16 +34,17 @@ public class GestorFTP {
         clienteFTP = new FTPClient();
     }
     
-    public boolean conectar(String servidor, int puerto, String usuario, String password) throws SocketException, IOException {
+    public boolean conectar(String servidor, int puerto, String usuario, String password) throws SocketException, IOException, UnknownHostException {
         this.SERVIDOR = servidor;
         this.PUERTO = puerto;
         this.USUARIO = usuario;
         this.PASSWORD = password;
         clienteFTP.connect(SERVIDOR, PUERTO);
         int respuesta = clienteFTP.getReplyCode();
+        System.out.println(respuesta);
         if (!FTPReply.isPositiveCompletion(respuesta)) {
             clienteFTP.disconnect();
-            System.out.println("Error al conectar con el servidor FTP");
+            System.out.println("Error al conectar con el servidor FTP, pruebe de nuevo...");
             return false;
         }
     

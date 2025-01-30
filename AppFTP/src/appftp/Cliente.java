@@ -5,6 +5,8 @@
 package appftp;
 
 import java.io.IOException;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -106,6 +108,12 @@ public class Cliente {
                     mostrarAyuda();
                 }
 
+            }catch (SocketException ex){
+                System.out.println("Error al conectar con el servidor FTP, pruebe de nuevo...");
+                ex.printStackTrace();
+            }catch (UnknownHostException ex){
+                System.out.println("Error al conectar con el servidor FTP, host desconocido...");
+                ex.printStackTrace();
             } catch (IOException ex) {
                 Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
             }
